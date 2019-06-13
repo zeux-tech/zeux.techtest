@@ -4,7 +4,8 @@
 This is a sample solution that implements the following set of requirements
 
 Create a web page containing the following design: 
-https://invis.io/97NNP97B6FK#/282382917_My_Assets_-_Scroll_Down 
+
+![alt text](http://bit.ly/2EzzpXo)
 
 Please use a mobile first approach. It’s a bonus if you can simply demonstrate fluid layout and responsive design when the screen size increases. 
 
@@ -40,7 +41,3 @@ Returns (e.g. 2.34% Yearly)
 - Authorization: JWT (JSON Web Tokens)
 
 To run the application simple build and run Zeux.Test.sln in Visual Studio.
-
-
-![alt text](http://bit.ly/2EzzpXo)
-![alt text](http://bit.ly/2ExdQqo)
