@@ -3,16 +3,11 @@
 ## Background
 This is a sample solution that implements the following set of requirements
 
-Create a web page containing the following design: 
+Create the following web page: 
 
 ![alt text](http://bit.ly/2EzzpXo)
 
-Please use a mobile first approach. It’s a bonus if you can simply demonstrate fluid layout and responsive design when the screen size increases. 
-
-Please replace the following with text: 
-The logo in on the top left => “logo” 
-The cog in on the top right => “settings” 
-Remove all logos in bottom navigation. 
+Please use a mobile first design approach. It’s a bonus if you can simply demonstrate fluid layout and responsive design when the screen size increases. 
 
 The navigation bar should direct you to different routes. Routes other than “Assets” will be empty. The top bar with the title and the bottom navigation bar should always be visible. 
 
