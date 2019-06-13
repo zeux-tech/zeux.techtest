@@ -1,5 +1,8 @@
 # Zeux Tech Test
 
+## Important
+Please download or fork this repository and submit your test separately. Do not generate pull requests or attempt to commit directly to this repo.
+
 ## Background
 This is a sample solution that implements the following set of requirements
 
