@@ -3,31 +3,17 @@
 ## Important
 Please download or fork this repository and submit your test separately. Do not generate pull requests or attempt to commit directly to this repo.
 
-## Background
-This is a sample solution that implements the following set of requirements
+## Application
+This is a sample solution that implements the following features
 
-Create the following web page: 
+Mobile first single Page Application with
+- A navigation bar
+- "All", "Savings", "P2P", "Funds" tabs
+- Different lists of investment products are loaded in each tab.
 
 ![alt text](http://bit.ly/2EzzpXo)
 
-Please use a mobile first design approach. It’s a bonus if you can simply demonstrate fluid layout and responsive design when the screen size increases. 
-
-The navigation bar should direct you to different routes. Routes other than “Assets” will be empty. The top bar with the title and the bottom navigation bar should always be visible. 
-
-The “Opportunities” tab can be empty but should be integrated with routing. 
-
-The “Savings, P2P, Funds” tabs can be empty but should be integrated with routing. 
-
-The data to populate the list of investment products should be retrieved from a RESTful api. This api should be **secured** so that only authenticated users can retrieve it. 
-
-You have the freedom to choose how you secure the api. An example would be using Http verb attributes, and authenticating a token for this API call. We don't need full authentication but we do expect you to demonstrate your understanding as to how an API endpoint can be restricted to authenticated users. 
-
-You only need to retrieve 10 products each containing the following information 
-
-Name 
-Product Type 
-Price 
-Returns (e.g. 2.34% Yearly) 
+The data to populate the list of investment products is retrieved from a RESTful api. This api is **secured** so that only authenticated users can retrieve it. 
 
 ## Application
 - Startup project: Zeux.Test.Server
