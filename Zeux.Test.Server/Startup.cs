@@ -23,6 +23,9 @@ namespace Zeux.Test.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<AuthOptions>(Configuration.GetSection("Auth"));
+            var authOptions = Configuration.GetSection("Auth").Get<AuthOptions>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -30,12 +33,12 @@ namespace Zeux.Test.Server
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer = AuthOptions.Issuer,
+                        ValidIssuer = authOptions.Issuer,
                         ValidateAudience = true,
-                        ValidAudience = AuthOptions.Audience,
+                        ValidAudience = authOptions.Audience,
                         ValidateLifetime = true,
 
-                        IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                        IssuerSigningKey = authOptions.GetSymmetricSecurityKey(),
                         ValidateIssuerSigningKey = true,
                     };
                 });
@@ -93,14 +96,15 @@ namespace Zeux.Test.Server
 
         private void RegisterRepositories(IServiceCollection services)
         {
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IAssetRepository, AssetRepository>();
+            services.AddSingleton<IContext, FakeContext>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAssetRepository, AssetRepository>();
         }
 
         private void RegisterServices(IServiceCollection services)
         {
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IAssetService, AssetService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAssetService, AssetService>();
         }
     }
 }

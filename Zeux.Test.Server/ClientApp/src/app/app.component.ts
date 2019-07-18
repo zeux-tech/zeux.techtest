@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/app.auth.service';
 import { first } from 'rxjs/operators';
+import { AuthenticationService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',

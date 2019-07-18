@@ -1,16 +1,21 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Zeux.Test.Server.Models;
+using Zeux.Test.Models;
 
 namespace Zeux.Test.Repositories
 {
     public class UserRepository: IUserRepository
     {
-        private readonly FakeContext _context = new FakeContext();
+        private readonly IContext context;
+
+        public UserRepository(IContext context)
+        {
+            this.context = context;
+        }
 
         public async Task<User> FindUser(string user, string password)
         {
-            return await Task.Run(() => _context.Users.FirstOrDefault(x => x.Login == user && x.Password == password));
+            return await Task.Run(() => context.Users.FirstOrDefault(x => x.Login == user && x.Password == password));
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Zeux.Test.Server.Models;
+using Zeux.Test.Models;
 
 namespace Zeux.Test.Services
 {

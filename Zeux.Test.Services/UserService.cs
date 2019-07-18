@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using Zeux.Test.Models;
 using Zeux.Test.Repositories;
-using Zeux.Test.Server.Models;
 
 namespace Zeux.Test.Services
 {

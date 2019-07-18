@@ -5,17 +5,21 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { OpportunitiesComponent } from './opportunities/opportunities.component';
-import { MyAssetsComponent } from './my-assets/my-assets.component';
-import { HeaderComponent } from './header/header.component';
-import { AuthInterceptor } from 'src/app/app.auth.interseptor';
+import { OpportunitiesComponent } from './components/opportunities/opportunities.component';
+import { MyAssetsComponent } from './components/my-assets/my-assets.component';
+import { HeaderComponent } from './components/header/header.component';
+import { TitleCasePipe } from './pipes/title-case.pipe';
+import { AuthInterceptor } from './app.auth.interseptor';
+import { AssetsFilterPipe } from './pipes/assets-filter.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     OpportunitiesComponent,
     MyAssetsComponent,
-    HeaderComponent
+    HeaderComponent,
+    TitleCasePipe,
+    AssetsFilterPipe
   ],
   imports: [
     CommonModule,

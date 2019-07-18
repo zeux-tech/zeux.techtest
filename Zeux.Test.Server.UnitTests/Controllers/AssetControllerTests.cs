@@ -21,7 +21,7 @@ namespace Zeux.Test.Server.UnitTests.Controllers
             mockService.Setup(service => service.Get())
                 .ReturnsAsync(context.Assets);
 
-            var controller = new AssetController(mockService.Object);
+            var controller = new AssetsController(mockService.Object);
 
             // Act
             var res = await controller.Get(string.Empty);
@@ -42,7 +42,7 @@ namespace Zeux.Test.Server.UnitTests.Controllers
             mockService.Setup(service => service.Get(type))
                 .ReturnsAsync(context.Assets.Where(a => a.Type.Name == type));
 
-            var controller = new AssetController(mockService.Object);
+            var controller = new AssetsController(mockService.Object);
 
             // Act
             var res = await controller.Get(type);
@@ -63,7 +63,7 @@ namespace Zeux.Test.Server.UnitTests.Controllers
             mockService.Setup(service => service.Get(type))
                 .ReturnsAsync(context.Assets.Where(a => a.Type.Name == type));
 
-            var controller = new AssetController(mockService.Object);
+            var controller = new AssetsController(mockService.Object);
 
             // Act
             var res = await controller.Get(type);
@@ -83,7 +83,7 @@ namespace Zeux.Test.Server.UnitTests.Controllers
             mockService.Setup(service => service.GetTypes())
                 .ReturnsAsync(context.AssetTypes);
 
-            var controller = new AssetController(mockService.Object);
+            var controller = new AssetsController(mockService.Object);
 
             // Act
             var res = await controller.GetTypes();

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MyAssetsComponent } from 'src/app/my-assets/my-assets.component';
-import { OpportunitiesComponent } from 'src/app/opportunities/opportunities.component';
+import { MyAssetsComponent } from './components/my-assets/my-assets.component';
+import { OpportunitiesComponent } from './components/opportunities/opportunities.component';
 
 const routes: Routes = [
   {
-    path: 'myassets/:type',
+    path: 'my-assets/:type',
     component: MyAssetsComponent
   },
   {
@@ -14,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'myassets/all'
+    redirectTo: 'my-assets/all'
   }
 ];
 

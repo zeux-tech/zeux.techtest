@@ -1,68 +1,66 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.IO;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
+using Zeux.Test.Server.Models.Account;
 using Zeux.Test.Services;
 
 namespace Zeux.Test.Server.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountController : Controller
     {
-        private readonly IUserService _userService;
-        public AccountController(IUserService userService)
+        private readonly IUserService userService;
+
+        private readonly IOptions<AuthOptions> authOptions;
+
+        public AccountController(IUserService userService, IOptions<AuthOptions> authOptions)
         {
-            _userService = userService;
+            this.userService = userService;
+            this.authOptions = authOptions;
         }
 
         [HttpPost("/token")]
-        public async Task Token([FromBody] TokenModel model)
+        public async Task<IActionResult> Token([FromBody] TokenModel model)
         {
-            var username = model.username;
-            var password = model.password;
-            var identity = await GetIdentity(username, password);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var identity = await GetIdentity(model.Username, model.Password);
             if (identity == null)
             {
-                Response.StatusCode = 400;
-                await Response.WriteAsync("Invalid username or password.");
-                return; 
+                return BadRequest("Invalid username or password.");
             }
 
             var now = DateTime.UtcNow;
             var jwt = new JwtSecurityToken(
-                    issuer: AuthOptions.Issuer,
-                    audience: AuthOptions.Audience,
+                    issuer: authOptions.Value.Issuer,
+                    audience: authOptions.Value.Audience,
                     notBefore: now,
                     claims: identity.Claims,
-                    expires: now.Add(TimeSpan.FromMinutes(AuthOptions.Lifetime)),
-                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+                    expires: now.Add(TimeSpan.FromMinutes(authOptions.Value.Lifetime)),
+                    signingCredentials: new SigningCredentials(authOptions.Value.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            var response = new
-            {
-                token = encodedJwt,
-                username = identity.Name
-            };
-
-            Response.ContentType = "application/json";
             Response.Cookies.Append("jwt-token", encodedJwt);
             Response.Cookies.Append("jwt-user", identity.Name);
 
-            var result = JsonConvert.SerializeObject(response, new JsonSerializerSettings {Formatting = Formatting.Indented});
-            await Response.WriteAsync(result);
+            return Json(new
+            {
+                token = encodedJwt,
+                username = identity.Name
+            });
         }
 
         private async Task<ClaimsIdentity> GetIdentity(string username, string password)
         {
-            var person = await _userService.FindUser(username, password);
+            var person = await userService.FindUser(username, password);
             if (person != null)
             {
                 var claims = new List<Claim>
@@ -70,19 +68,11 @@ namespace Zeux.Test.Server.Controllers
                     new Claim(ClaimsIdentity.DefaultNameClaimType, person.Login),
                     new Claim(ClaimsIdentity.DefaultRoleClaimType, person.Role)
                 };
-                ClaimsIdentity claimsIdentity =
-                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                    ClaimsIdentity.DefaultRoleClaimType);
-                return claimsIdentity;
+
+                return new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             }
 
             return null;
-        }
-
-        public class TokenModel
-        {
-            public string username;
-            public string password;
         }
     }
 }

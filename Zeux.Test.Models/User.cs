@@ -1,4 +1,4 @@
-﻿namespace Zeux.Test.Server.Models
+﻿namespace Zeux.Test.Models
 {
     public class User
     {
